@@ -1,0 +1,295 @@
+/* ===== 基本設定 ===== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  color: #fff;
+  background-image: url("../images/yoru.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+/* ===== ヘッダー ===== */
+.status-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 左寄せ */
+  padding: 10px 30px;
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  left: 270px; /* サイドバー幅に合わせる */
+  width: calc(100% - 230px);
+  z-index: 100;
+  gap: 20px; /* アイコン・名前・レベルバーの間隔 */
+}
+
+/* ヘッダー右側：アイコン＋名前＋レベルバー */
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* 名前とレベルバーの間隔 */
+}
+
+/* アイコン */
+.mini-hero-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #ffd27f;
+}
+
+/* 名前 */
+#playerName {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0; /* 余白リセット */
+}
+
+/* レベルバー全体 */
+.level-bar {
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* 左余白リセット */
+  width: 200px; /* 必要に応じて調整 */
+  gap: 4px; /* レベル文字とバーの間 */
+}
+
+/* レベル文字 */
+.level-header {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* 経験値バー */
+.bar {
+  width: 100%;
+  height: 16px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 50%; /* 例：50% */
+  height: 100%;
+  background: linear-gradient(90deg, #ffcc66, #ff8b8b);
+  transition: width 0.6s ease-in-out;
+}
+
+
+/* ===== サイドバー ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 230px;
+  height: 100vh;
+  background: linear-gradient(180deg, #312e12, #f7e2a9);
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.sidebar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #f1c40f;
+  text-shadow: 0 0 10px rgba(241, 196, 15, 0.7);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.menu button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #ecf0f1;
+  font-size: 18px;
+  padding: 12px 16px;
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu button:hover { background-color: rgba(255,255,255,0.15); padding-left: 24px; }
+.menu button:active { background-color: rgba(255,255,255,0.25); }
+
+/* ===== メイン画面 ===== */
+.main-layout {
+  display: flex;
+  flex-grow: 1;
+  padding-left: 230px;
+}
+
+.task-area {
+  margin-top: 100px; /* ヘッダーの高さ + 余白 */
+  padding: 40px 60px;
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative; /* モーダルやタスクとの干渉防止 */
+  z-index: 1;
+}
+
+/* ===== タスクリスト ===== */
+#questList { list-style: none; padding: 0; margin-top: 40px; }
+
+/* タスクカード風 */
+.quest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(55, 52, 24, 0.605);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.372);
+  transition: transform 0.2s, background 0.2s, opacity 0.5s;
+}
+
+.quest-item:hover {
+  transform: translateY(-2px);
+  background: rgba(158, 146, 57, 0.9);
+}
+
+.quest-name {
+  flex-grow: 1;
+  font-size: 1.15rem;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.deadline {
+  font-size: 0.9rem;
+  margin-left: 12px;
+  white-space: nowrap;
+}
+
+/* 【修正・追加点: 達成済みタスクのスタイル】 */
+.quest-item.done {
+    opacity: 0.6; /* 透明度を下げて完了を示す */
+    background: rgba(30,30,30,0.85); /* 色を暗くする */
+    border-left: 6px solid #4a4a4a; /* ボーダーを灰色にする */
+}
+
+.quest-item.done .quest-name {
+    text-decoration: line-through; /* 取り消し線 */
+    color: #a0a0a0;
+}
+
+.quest-item.done .deadline {
+    color: #a0a0a0 !important; /* 期限日の色を暗くする */
+}
+
+
+/* 優先度色 (達成済みでないものにのみ適用) */
+.priority-high:not(.done) { border-left: 6px solid #ff5c5c; }
+.priority-medium:not(.done) { border-left: 6px solid #ffc94d; }
+.priority-low:not(.done) { border-left: 6px solid #70d47e; }
+
+/* 期限警告 */
+.deadline.overdue { color: #ff4c4c; font-weight: bold; }
+.deadline.warning { color: #ffd27f; font-weight: bold; }
+
+/* ボタン */
+.quest-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+.quest-item button:hover { transform: scale(1.2); }
+
+.bell { color: #ffcc33; }
+.delete { color: #fff; background: rgba(255,0,0,0.6); border-radius: 50%; padding: 4px 6px; }
+
+
+/* ===== 追加ボタン ===== */
+.add-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ffd27f;
+  color: #603030;
+  border: none;
+  font-size: 36px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+.add-btn:hover { background-color: #ffe699; transform: scale(1.1); }
+
+/* ===== モーダル ===== */
+/* ===== モーダル ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #442b3d;
+  padding: 25px 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  animation: popIn 0.3s ease-out;
+}
+
+/* 日付＋時間縦並び */
+.modal-content input, 
+.modal-content select {
+  width: 90%;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* 保存・キャンセルボタン */
+.modal-content .btn-group {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 12px;
+}
+
+/* アニメーション */
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+#saveTaskBtn:hover { background: #ffe699; transform: scale(1.1); }
+#cancelTaskBtn { background: #aaa; color: #fff; cursor: pointer; padding: 8px 16px; border-radius: 6px; }

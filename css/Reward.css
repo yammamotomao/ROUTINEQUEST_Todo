@@ -1,0 +1,122 @@
+/* =============================
+   ROUTINEQUEST - Reward Screen 完全版CSS
+   Producer仕上げ版
+   ============================= */
+
+/* 画面全体 */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  color: #ffffff;
+  background-image: url("../images/yoru.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+:root {
+  --sidebar-width: 230px;
+  --color-dark-bg-opacity: rgba(0, 0, 0, 0.35);
+}
+/* メイン領域：サイドバーに被らないようにする */
+.main-layout {
+  margin-left: var(--sidebar-width); /* 変数を使用 */
+  width: calc(100% - var(--sidebar-width));  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* 中央コンテンツのボックス */
+.reward-main {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  width: 90%;
+  max-width: 900px;
+  min-width: 0; /* ←これがないと中身が横にはみ出す */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* タイトル */
+.reward-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* カードグリッド配置 */
+.reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* カード本体 */
+.reward-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.reward-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+}
+
+/* カードタイトル */
+.reward-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* カード内部のテキスト */
+.reward-card-text {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+/* ボタン */
+.reward-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background: #ffcc33;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.reward-btn:hover {
+  background: #ffe27a;
+}
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+  .main-layout {
+    padding: 10px;
+  }
+  .reward-main {
+    padding: 20px;
+  }
+  .reward-title {
+    font-size: 26px;
+  }
+}

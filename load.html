@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ROUTINEQUEST- ログイン -</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/load.css">
+  <script src="js/timeChange.js" defer></script>
+</head>
+<body>
+  <div class="login-container">
+    <h1>ROUTINEQUEST</h1>
+    <p>セーブスロットを選んでください</p>
+
+    <select id="slotSelect">
+      <option value="slot1">スロット1</option>
+      <option value="slot2">スロット2</option>
+      <option value="slot3">スロット3</option>
+    </select>
+
+    <input type="password" id="password" placeholder="パスワードを入力">
+
+    <button id="loginBtn">ログイン</button>
+  </div>
+
+  <script src="js/login.js"></script>
+  <script>
+    document.getElementById("loginBtn").addEventListener("click", () => {
+  const slot = document.getElementById("slotSelect").value;
+  const password = document.getElementById("password").value;
+
+  const saveData = JSON.parse(localStorage.getItem(slot));
+  if (!saveData) {
+    alert("セーブデータがありません。");
+    return;
+  }
+
+  if (saveData.password === password) {
+    localStorage.setItem("currentSlot", slot);
+    window.location.href = "index.html";
+  } else {
+    alert("パスワードが違います！");
+  }
+});
+
+  </Script>
+</body>
+</html>

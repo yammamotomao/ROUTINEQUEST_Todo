@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>ROUTINEQUEST - 報酬</title>
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/Reward.css" />
+  <script src="js/status.js" defer></script>
+  <script src="js/index.js" defer></script>
+  <script src="js/timeChange.js" defer></script>
+  <script src="js/Reward.js" defer></script>
+</head>
+<body>
+  <!-- ヘッダー（ステータスバー） -->
+  <header class="status-header">
+    <div class="status-left"></div>
+    <div class="status-right">
+      <img src="images/hero.png" id="miniHeroIcon" class="mini-hero-icon" />
+      <span id="playerName">名無しの冒険者</span>
+      <div class="level-bar">
+        <div class="level-header">Lv<span id="level">1</span></div>
+        <div class="bar"><div class="progress" id="expBar"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <aside class="sidebar">
+      <h1 class="logo">ROUTINE<br />QUEST</h1>
+      <nav class="menu">
+        <a href="status.html"><button>ステータス</button></a>
+        <a href="index.html"><button>今日のタスク</button></a>
+        <a href="calendar.html"><button>カレンダー</button></a>
+        <a href="Reward.html"><button>報酬</button></a>
+      </nav>
+    </aside>
+
+    <!-- ✨ 新しい理想の報酬ページ ✨ -->
+    <main class="reward-main">
+      <section class="reward-dashboard">
+        <h2>報酬ダッシュボード</h2>
+        <div class="reward-cards">
+          <div class="reward-card">
+            <h3>💰 コイン</h3>
+            <p id="coinCountDisplay">0</p>
+          </div>
+          <div class="reward-card">
+            <h3>🎟️ チケット</h3>
+            <p id="ticketCountDisplay">0</p>
+          </div>
+          <div class="reward-card">
+            <h3>📘 図鑑コンプ率</h3>
+            <p id="collectionRateDisplay">0%</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="reward-actions">
+        <h2>アクション</h2>
+        <div class="action-buttons">
+          <button id="openGacha" class="action-btn">ガチャを回す</button>
+          <button id="openTitleList" class="action-btn">称号を見る</button>
+          <button id="openCollectionList" class="action-btn">図鑑を見る</button>
+        </div>
+      </section>
+
+      <section class="recent-rewards">
+        <h2>最近の獲得報酬</h2>
+        <ul id="recentRewardList" class="reward-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Reward.js が自動でモーダルを挿入する -->
+</body>
+</html>

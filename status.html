@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ROUTINEQUEST - ステータス -</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/status.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/status.js" defer></script>
+  <script src="js/timeChange.js" defer></script>
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+  <body>
+      <div class="main-layout">
+    <!-- サイドバー -->
+    <aside class="sidebar">
+      <h1 class="logo">ROUTINE<br>QUEST</h1>
+      <nav class="menu">
+        <a href="status.html"><button>ステータス</button></a>
+        <a href="index.html"><button>今日のタスク</button></a>
+        <a href="calendar.html"><button>カレンダー</button></a>
+        <a href="Reward.html"><button>報酬</button></a>
+      </nav>
+    </aside>
+        <!-- メインコンテンツ -->
+    <section class="status-area">
+      <h2>冒険者ステータス</h2>
+
+      <div class="status-card">
+        <img id="heroImage" src="images/hero-card_mahoutukai.png" alt="Hero" class="hero-icon">
+        <input type="file" id="imageInput" accept="image/*" style="display:none;">
+        <button id="changeImageBtn">画像を変更</button>
+
+        <div class="status-info">
+  <p>
+    <strong>名前：</strong>
+    <span id="playerName">名無しの冒険者</span>
+    <button id="editNameBtn">✏️</button>
+  </p>
+
+  <p>
+    <strong>レベル：</strong>
+    <span id="playerLevel">1</span>
+  </p>
+
+  <p>
+    <strong>称号：</strong>
+    <span id="playerTitle">見習い冒険者</span>
+    <button id="editTitleBtn">✏️</button>
+  </p>
+</div>
+
+    </section>
+
+     </div>
+  </body>
+</html>

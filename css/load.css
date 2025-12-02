@@ -1,0 +1,90 @@
+/* 全体レイアウト */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans JP", sans-serif;
+  background: linear-gradient(135deg, #101820, #2b2f3a);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* ログインボックス */
+.login-container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  padding: 40px 60px;
+  width: 320px;
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* タイトル */
+.login-container h1 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: #89d2ff;
+}
+
+/* セレクトと入力 */
+select,
+input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 10px 0 20px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ログインボタン */
+button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00aaff, #0066ff);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 150, 255, 0.4);
+}
+
+/* メッセージなど */
+p {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

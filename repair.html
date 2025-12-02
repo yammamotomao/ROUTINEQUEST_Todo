@@ -1,0 +1,210 @@
+<!-- 保存名: repair.html -->
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Repair - Kanriza quick restore</title>
+<style>
+  :root{--accent:#ffd27f;--muted:rgba(255,255,255,0.15);}
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif}
+  body{display:flex;align-items:center;justify-content:center;transition:background 0.6s ease;color:#fff}
+  .app{width:100%;max-width:980px;padding:28px;box-sizing:border-box}
+  h1{margin:0 0 12px;font-size:2rem;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,0.6)}
+  .panel{background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.25));padding:18px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.45)}
+  /* hero list */
+  .hero-list{display:flex;gap:18px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+  .hero-card{width:210px;border-radius:12px;padding:12px;background:var(--muted);text-align:center;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s; border:2px solid transparent}
+  .hero-card img{width:160px;height:160px;object-fit:cover;border-radius:10px;display:block;margin:0 auto 8px}
+  .hero-card.selected{transform:translateY(-6px) scale(1.03);box-shadow:0 10px 30px rgba(0,0,0,.5);border-color:var(--accent)}
+  .controls{text-align:center;margin-top:12px}
+  button{padding:10px 18px;border-radius:10px;border:none;background:#ffb84d;color:#222;font-weight:600;cursor:pointer}
+  input[type=text],input[type=password]{display:block;margin:12px auto;padding:10px 14px;border-radius:8px;border:none;min-width:240px}
+  .slots{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .slot{width:200px;height:110px;border-radius:10px;background:rgba(0,0,0,0.35);padding:10px;box-sizing:border-box;text-align:left}
+  .slot h3{margin:0 0 6px}
+  .row{display:flex;gap:8px;justify-content:center}
+  .small{font-size:0.9rem;color:#eee;opacity:.9}
+  footer{position:fixed;left:12px;bottom:8px;color:rgba(255,255,255,0.75);font-size:12px}
+  /* background classes */
+  body.morning{background:linear-gradient(180deg,#a8e6cf,#7ecfbe)}
+  body.day{background:linear-gradient(180deg,#c7f0ff,#87ceeb)}
+  body.evening{background:linear-gradient(180deg,#ffddb4,#ffb88c)}
+  body.night{background:linear-gradient(180deg,#22243a,#0f1724)}
+  /* small responsiveness */
+  @media (max-width:640px){.hero-card{width:140px}.hero-card img{width:120px;height:120px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="panel" id="stage-login">
+    <h1>Kanriza — 新規登録リカバリ</h1>
+    <p class="small" style="text-align:center">このページは「壊れたデザイン」を素早く復帰させるためのワークアラウンドです。</p>
+
+    <!-- ステップ切り替え -->
+    <div id="step-area">
+
+      <!-- 1: 主人公選択 -->
+      <div class="step" id="step-hero">
+        <h2 style="text-align:center">主人公を選んでください</h2>
+        <div class="hero-list" id="heroList">
+          <div class="hero-card" data-hero="senshi"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%23c34c4c'/><text x='50%' y='55%' font-size='40' text-anchor='middle' fill='white'>戦士</text></svg>" alt="戦士"><strong>戦士</strong><div class="small">力で切り拓く</div></div>
+          <div class="hero-card" data-hero="mahoutukai"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%235b8bd8'/><text x='50%' y='55%' font-size='40' text-anchor='middle' fill='white'>魔法</text></svg>" alt="魔法使い"><strong>魔法使い</strong><div class="small">知恵で突破</div></div>
+          <div class="hero-card" data-hero="tozoku"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%2387c55f'/><text x='50%' y='55%' font-size='40' text-anchor='middle' fill='white'>盗賊</text></svg>" alt="盗賊"><strong>盗賊</strong><div class="small">素早さで片付け</div></div>
+        </div>
+        <div class="controls">
+          <button id="toName">この主人公で始める</button>
+        </div>
+      </div>
+
+      <!-- 2: 名前入力 -->
+      <div class="step" id="step-name" style="display:none">
+        <h2>名前を決めよう</h2>
+        <input type="text" id="inputName" maxlength="12" placeholder="主人公の名前（12文字まで）">
+        <input type="password" id="inputPass" maxlength="12" placeholder="パスワード（後でロック解除）">
+        <div class="controls">
+          <button id="toSlots">次へ（セーブ）</button>
+        </div>
+      </div>
+
+      <!-- 3: セーブスロット -->
+      <div class="step" id="step-slots" style="display:none">
+        <h2>セーブスロットを選択（最大3）</h2>
+        <div class="slots" id="slotsArea"></div>
+        <div class="row" style="margin-top:12px">
+          <button id="backToHero" style="background:#aaa;color:#111">戻る</button>
+          <button id="finish" style="background:#7bd389;color:#042">完了してトップへ</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>Quick-repair mode — Live Server 推奨</footer>
+
+<script>
+/* ---------- time theme (works on load) ---------- */
+(function applyTimeTheme(){
+  const hour = new Date().getHours();
+  let cls = 'day';
+  if(hour >= 5 && hour < 10) cls='morning';
+  else if(hour >= 10 && hour < 17) cls='day';
+  else if(hour >= 17 && hour < 19) cls='evening';
+  else cls='night';
+  document.body.classList.add(cls);
+})();
+
+/* ---------- small single-file app logic ---------- */
+document.addEventListener('DOMContentLoaded', ()=> {
+  const heroCards = Array.from(document.querySelectorAll('.hero-card'));
+  const toNameBtn = document.getElementById('toName');
+  const toSlotsBtn = document.getElementById('toSlots');
+  const backToHero = document.getElementById('backToHero');
+  const finishBtn = document.getElementById('finish');
+  const slotsArea = document.getElementById('slotsArea');
+
+  let selectedHero = null;
+  let playerName = null;
+  let playerPass = null;
+
+  // Hero select logic
+  heroCards.forEach(c=>{
+    c.addEventListener('click', ()=> {
+      heroCards.forEach(x=>x.classList.remove('selected'));
+      c.classList.add('selected');
+      selectedHero = c.dataset.hero;
+    });
+  });
+
+  toNameBtn.addEventListener('click', ()=>{
+    if(!selectedHero){ alert('主人公を選んでください！'); return; }
+    document.getElementById('step-hero').style.display='none';
+    document.getElementById('step-name').style.display='block';
+    // ephemeral store so you can inspect localStorage in real world flow
+    localStorage.setItem('tmp_selectedHero', selectedHero);
+  });
+
+  toSlotsBtn && toSlotsBtn.addEventListener('click', ()=>{
+    const name = document.getElementById('inputName').value.trim();
+    const pass = document.getElementById('inputPass').value.trim();
+    if(!name || !pass){ alert('名前とパスワードを入力してください'); return; }
+    playerName = name; playerPass = pass;
+    localStorage.setItem('tmp_playerName', playerName);
+    localStorage.setItem('tmp_playerPass', playerPass);
+    renderSlots();
+    document.getElementById('step-name').style.display='none';
+    document.getElementById('step-slots').style.display='block';
+  });
+
+  backToHero && backToHero.addEventListener('click', ()=>{
+    document.getElementById('step-slots').style.display='none';
+    document.getElementById('step-hero').style.display='block';
+  });
+
+  finishBtn.addEventListener('click', ()=>{
+    alert('保存してトップに戻ります（デモ）');
+    // in production flow you'd set saveSlots and go to index
+    window.location.reload();
+  });
+
+  function loadSaveSlots(){
+    try{
+      return JSON.parse(localStorage.getItem('saveSlots') || '[null,null,null]');
+    }catch(e){ return [null,null,null]; }
+  }
+
+  function renderSlots(){
+    const slots = loadSaveSlots();
+    slotsArea.innerHTML='';
+    slots.forEach((s,i)=>{
+      const div = document.createElement('div');
+      div.className = 'slot';
+      if(s){
+        div.innerHTML = `<h3>Slot ${i+1}</h3><div class="small">Name: ${s.name}</div><div class="small">Hero: ${s.hero}</div><div style="margin-top:8px"><button data-i="${i}" class="load">ロード</button> <button data-i="${i}" class="del" style="background:#ff6666">削除</button></div>`;
+      } else {
+        div.innerHTML = `<h3>Slot ${i+1}</h3><div class="small">空きスロット</div><div style="margin-top:8px"><button data-i="${i}" class="save">ここに保存</button></div>`;
+      }
+      slotsArea.appendChild(div);
+    });
+
+    // bind events
+    slotsArea.querySelectorAll('.save').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const i = +e.target.dataset.i;
+        const slots = loadSaveSlots();
+        const hero = localStorage.getItem('tmp_selectedHero') || selectedHero;
+        const name = localStorage.getItem('tmp_playerName') || playerName;
+        slots[i] = { name: name || '名無し', hero: hero || 'none' };
+        localStorage.setItem('saveSlots', JSON.stringify(slots));
+        renderSlots();
+        alert('保存しました！');
+      });
+    });
+
+    slotsArea.querySelectorAll('.del').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const i = +e.target.dataset.i;
+        const slots = loadSaveSlots();
+        slots[i] = null;
+        localStorage.setItem('saveSlots', JSON.stringify(slots));
+        renderSlots();
+      });
+    });
+
+    slotsArea.querySelectorAll('.load').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const i = +e.target.dataset.i;
+        const slots = loadSaveSlots();
+        alert(`ロード: ${slots[i].name} (${slots[i].hero}) —（デモ）`);
+      });
+    });
+  }
+
+  // initial render of slots if user navigates directly
+  if(document.getElementById('step-slots').style.display !== 'none') renderSlots();
+
+});
+</script>
+</body>
+</html>

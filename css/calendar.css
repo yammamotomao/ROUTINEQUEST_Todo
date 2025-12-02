@@ -1,0 +1,167 @@
+/* ======================================= */
+/* 🎨 整理されたカレンダーCSS (モダン・クリーン対応) */
+/* ======================================= */
+
+/* ------------------------------
+   1. CSS 変数 (クリーンなデザインのための定義)
+------------------------------ */
+:root {
+  --color-main-bg: #FFFFFF;    /* カレンダーのメイン背景 */
+  --color-text-dark: #333333;  /* 文字色 */
+  --color-accent-blue: #007AFF;/* イベント強調色 (青) */
+  --color-today: #FFC107;      /* 今日を強調 (アプリのアクセントに近い色) */
+  --color-border: #EEEEEE;     /* 薄いボーダー色 */
+  --color-button-light: #EFEFEF; /* ボタンの背景色 */
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.1); /* 柔らかい影 */
+}
+
+
+/* ===== カレンダー全体 ===== */
+.calendar-area {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  /* 変更点: クリーンな白背景、ぼかし・強い影を削除 */
+  background: var(--color-main-bg); 
+  border-radius: 12px;
+  color: var(--color-text-dark);
+  box-shadow: var(--shadow-soft);
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
+
+/* ===== カレンダー上部（年月＆ボタン） ===== */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-header button {
+  /* 変更点: フラットなボタンデザイン */
+  background: var(--color-button-light);
+  color: var(--color-text-dark);
+  border: none;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.calendar-header button:hover {
+  background: #DDDDDD;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* ===== 曜日 ===== */
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.calendar-weekdays div {
+  padding: 10px 0;
+  /* 変更点: 背景色をフラットな薄いボーダー色に */
+  background: transparent;
+  border-radius: 0;
+}
+/* 土日は色を強調 */
+.calendar-weekdays div:nth-child(1) { color: #E74C3C; } /* 日曜日 */
+.calendar-weekdays div:nth-child(7) { color: #3498DB; } /* 土曜日 */
+
+/* ===== 日付セル ===== */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-cell {
+  min-height: 80px;
+  /* 変更点: 1pxの薄いボーダーでセルの区切りを強調 */
+  background: var(--color-main-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column; /* 日付番号を上、イベントを下に配置しやすく */
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  font-size: 1rem;
+}
+
+.calendar-cell:hover {
+  background: #F8F8F8; /* ホバーで薄く色付け */
+}
+
+/* 今日 */
+.calendar-cell.today {
+  /* 変更点: テーマカラーで強調 */
+  border: 2px solid var(--color-today);
+  font-weight: bold;
+}
+
+/* タスクがある日 */
+.calendar-cell.has-event::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent-blue); /* クリーンな青色 */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border: none; /* 白い縁を削除 */
+}
+
+/* ===== イベントリスト ===== */
+#eventList {
+  margin-top: 30px;
+  padding: 20px;
+  /* 変更点: 非常に薄い背景とボーダー */
+  background: #F9F9F9;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-dark);
+}
+
+#eventList h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--color-text-dark);
+}
+
+/* リストアイテム */
+#eventList ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+#eventList li {
+  list-style: square; /* モダンな四角 */
+  margin-bottom: 8px;
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+/* タスクの色分け（優先度）はそのままキープ */
+li.priority-high { color: #ff6b6b; }
+li.priority-medium { color: #ffb84d; }
+li.priority-low { color: #6b9eff; }

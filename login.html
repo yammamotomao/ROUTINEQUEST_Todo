@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ROUTINEQUEST - ログイン/新規登録</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/timeChange.js" defer></script>
+</head>
+<body class="yoru">
+  <div class="container">
+    <div class="logo">
+      <img id="titleLogo" src="images/asa_logo.png" alt="ROUTINEQUEST">
+    </div>
+
+    <!-- ログインフォーム -->
+    <div class="auth-box login-box">
+      <input type="text" placeholder="ユーザー名" id="loginUser">
+      <input type="password" placeholder="パスワード" id="loginPass">
+      <button class="auth-btn" id="loginBtn">ログイン</button>
+      <p class="switch-text">アカウントがない？ <span class="switch-link" id="toRegister">新規登録</span></p>
+    </div>
+
+    <!-- 新規登録フォーム -->
+    <div class="auth-box register-box">
+      <input type="text" placeholder="ユーザー名" id="regUser">
+      <input type="email" placeholder="メールアドレス" id="regEmail">
+      <input type="password" placeholder="パスワード" id="regPass">
+
+      <!-- ヒーロー選択 -->
+      <div class="hero-select">
+        <p>ヒーローを選択</p>
+        <div class="hero-list">
+          <div class="hero-card"><img src="images/hero-card_mahoutukai.png" alt="hero1"></div>
+          <div class="hero-card"><img src="images/hero-card_senshi.png" alt="hero2"></div>
+          <div class="hero-card"><img src="images/hero-card_tozoku.png" alt="hero3"></div>
+        </div>
+      </div>
+
+      <!-- セーブスロット -->
+      <div class="slot-list">
+        <div class="slot">スロット1</div>
+        <div class="slot">スロット2</div>
+        <div class="slot">スロット3</div>
+      </div>
+
+      <button class="auth-btn" id="registerBtn">登録</button>
+      <p class="switch-text">すでにアカウントがある？ <span class="switch-link" id="toLogin">ログイン</span></p>
+    </div>
+  </div>
+
+  <footer>© 2025 ROUTINEQUEST</footer>
+
+  <script>
+    // 切り替え
+    const loginBox = document.querySelector('.login-box');
+    const registerBox = document.querySelector('.register-box');
+
+    document.getElementById('toRegister').addEventListener('click', () => {
+      loginBox.style.display = 'none';
+      registerBox.style.display = 'flex';
+    });
+
+    document.getElementById('toLogin').addEventListener('click', () => {
+      registerBox.style.display = 'none';
+      loginBox.style.display = 'flex';
+    });
+
+    // ヒーロー選択
+    const heroes = document.querySelectorAll('.hero-card');
+    heroes.forEach(hero => {
+      hero.addEventListener('click', () => {
+        heroes.forEach(h => h.classList.remove('selected'));
+        hero.classList.add('selected');
+      });
+    });
+
+    // セーブスロット選択
+    const slots = document.querySelectorAll('.slot');
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        slots.forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+      });
+    });
+
+    // 新規登録処理
+    document.getElementById('registerBtn').addEventListener('click', () => {
+      const username = document.getElementById('regUser').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPass').value;
+      const hero = document.querySelector('.hero-card.selected')?.querySelector('img').alt;
+      const slot = document.querySelector('.slot.selected')?.textContent;
+
+      if(!username || !email || !password || !hero || !slot) {
+        alert('全て選択・入力してください');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      if(users[username]) { alert('このユーザー名はすでに存在します'); return; }
+
+      users[username] = { email, password, hero, slot };
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('登録完了！ログインしてください');
+      loginBox.style.display = 'flex';
+      registerBox.style.display = 'none';
+    });
+
+    // ログイン処理
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const username = document.getElementById('loginUser').value.trim();
+      const password = document.getElementById('loginPass').value;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+      if(users[username] && users[username].password === password) {
+        localStorage.setItem('currentUser', username);
+        alert(`ログイン成功！ようこそ ${username} さん`);
+        location.href = 'index.html'; // index.html に移動
+      } else {
+        alert('ユーザー名またはパスワードが違います');
+      }
+    });
+  </script>
+</body>
+</html>

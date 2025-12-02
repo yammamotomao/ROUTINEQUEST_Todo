@@ -1,0 +1,66 @@
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>セーブスロット選択 - Routine Quest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/timeChange.js" defer></script>
+</head>
+<body class="register">
+  <div class="container save-select">
+    <h1>セーブスロットを選んでください</h1>
+
+    <div class="slot-list">
+      <div class="slot" data-slot="1"></div>
+      <div class="slot" data-slot="2"></div>
+      <div class="slot" data-slot="3"></div>
+    </div>
+
+    <button id="saveBtn">このスロットに保存</button>
+  </div>
+
+  <script>
+    const slots = document.querySelectorAll(".slot");
+    let selectedSlot = null;
+
+    // スロットを表示
+    const saves = JSON.parse(localStorage.getItem("saveData") || "[]");
+    slots.forEach((slot, i) => {
+      const data = saves[i];
+      if (data) {
+        slot.innerHTML = `
+          <strong>${i + 1}：</strong> ${data.heroName}（${data.hero}）<br>
+          <small>登録済み</small>
+        `;
+      } else {
+        slot.innerHTML = `<strong>${i + 1}：</strong> 空きスロット`;
+      }
+
+      slot.addEventListener("click", () => {
+        slots.forEach(s => s.classList.remove("selected"));
+        slot.classList.add("selected");
+        selectedSlot = i;
+      });
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      if (selectedSlot === null) {
+        alert("スロットを選択してください！");
+        return;
+      }
+
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      const heroPass = localStorage.getItem("heroPass");
+
+      const newData = { hero, heroName, heroPass };
+      const newSaves = JSON.parse(localStorage.getItem("saveData") || "[]");
+
+      newSaves[selectedSlot] = newData;
+      localStorage.setItem("saveData", JSON.stringify(newSaves));
+
+      alert(`スロット${selectedSlot + 1}にセーブしました！`);
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

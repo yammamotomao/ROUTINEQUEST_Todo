@@ -1,0 +1,53 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // ===== 職業カード選択処理 =====
+  const heroCards = document.querySelectorAll(".hero-card");
+  let selectedHero = null;
+
+  heroCards.forEach(card => {
+    card.addEventListener("click", () => {
+      // まず全てのカードから選択枠を外す
+      heroCards.forEach(c => c.classList.remove("selected"));
+      // このカードを選択
+      card.classList.add("selected");
+
+      // 名前入力もここで取得
+      const playerName = document.getElementById("playerName").value.trim();
+
+      // 選択中のキャラ情報を格納
+      selectedHero = {
+        name: playerName,
+        job: card.dataset.job,                // data-job に設定した職業名
+        icon: card.querySelector("img").src   // カード内の画像
+      };
+    });
+  });
+
+  // ===== 決定ボタン処理 =====
+  const confirmBtn = document.getElementById("confirmBtn");
+
+  if (confirmBtn) { // ← ボタンが存在する時だけ動かす
+    confirmBtn.addEventListener("click", () => {
+      const playerName = document.getElementById("playerName").value.trim();
+
+      // 入力チェック
+      if (!playerName) {
+        alert("名前を入力してください！");
+        return;
+      }
+      if (!selectedHero || !selectedHero.job) {
+        alert("職業を選んでください！");
+        return;
+      }
+
+      // ローカルストレージへ保存
+      localStorage.setItem("heroName", playerName);
+      localStorage.setItem("heroJob", selectedHero.job);
+      localStorage.setItem("heroIcon", selectedHero.icon);
+
+      // 次の画面へ遷移
+      window.location.href = "index.html";
+    });
+  } else {
+    console.warn("confirmBtn が見つかりません。HTMLに <button id='confirmBtn'> を追加してください。");
+  }
+});

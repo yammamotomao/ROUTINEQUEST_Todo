@@ -1,0 +1,152 @@
+/* サイドバー全体 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 230px;
+  height: 100vh;
+  background: linear-gradient(180deg, #7b4471, #e3e3e3);
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* タイトルロゴ */
+.sidebar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: 1px;
+  color: #f1c40f;
+}
+.logo {
+  text-shadow: 0 0 10px rgba(241, 196, 15, 0.7);
+}
+
+
+/* メニューボタン配置 */
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+/* 各ボタン */
+.menu button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #ecf0f1;
+  font-size: 18px;
+  padding: 12px 16px;
+  text-align: left;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* ホバー時の動き */
+.menu button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding-left: 24px;
+}
+
+/* 押されたとき */
+.menu button:active {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* メイン画面との余白確保 */
+main {
+  margin-left: 230px; /* サイドバー幅と合わせる */
+  padding: 20px;
+}
+.status-area {
+  flex-grow: 1;
+  padding: 60px;
+  color: #fff;
+  background: rgba(241, 241, 241, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  margin: 40px;
+}
+
+.status-area h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000000;
+  letter-spacing: 2px;
+}
+
+.status-card {
+  display: flex;
+  align-items: flex-start;
+  background: rgba(163, 149, 127, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  gap: 30px;
+}
+
+.hero-icon {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid #ffd27f;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hero-icon:hover {
+  transform: scale(1.05);
+}
+
+.status-info {
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.8;
+  flex-grow: 1;
+}
+
+.status-info strong {
+  color: #000000;
+}
+
+.status-info button {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  color: #ffd27f;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease, color 0.2s;
+}
+
+.status-info button:hover {
+  transform: scale(1.2);
+  color: #ffffff;
+}
+
+#changeImageBtn {
+  display: block;
+  margin-top: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#changeImageBtn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ROUTINEQUEST - カレンダー</title>
+
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/status.js" defer></script>
+  <script src="js/timeChange.js" defer></script>
+  <script src="js/calendar.js" defer></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body>
+
+<header class="status-header">
+  <div class="status-left"></div>
+  <div class="status-right">
+    <img src="images/hero.png" id="miniHeroIcon" class="mini-hero-icon">
+    <span id="playerName">名無しの冒険者</span>
+
+    <div class="level-bar">
+      <div class="level-header">Lv<span id="level">1</span></div>
+      <div class="bar"><div class="progress" id="expBar"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="main-layout">
+
+  <!-- サイドバー -->
+  <aside class="sidebar">
+    <h1 class="logo">ROUTINE<br>QUEST</h1>
+    <nav class="menu">
+      <a href="status.html"><button>ステータス</button></a>
+      <a href="index.html"><button>今日のタスク</button></a>
+      <a href="calendar.html"><button class="active">カレンダー</button></a>
+      <a href="Reward.html"><button>報酬</button></a>
+    </nav>
+  </aside>
+
+  <!-- カレンダー本体 -->
+   <button id="addTaskCalendarBtn" class="add-btn"><i class="fas fa-plus"></i> タスク追加</button>
+  <section class="calendar-area">
+
+    <div class="calendar-header">
+      <button id="prevMonth">◀</button>
+      <h2 id="monthYear"></h2>
+      <button id="nextMonth">▶</button>
+    </div>
+
+    <!-- ▼曜日 -->
+    <div class="calendar-weekdays">
+      <div>日</div>
+      <div>月</div>
+      <div>火</div>
+      <div>水</div>
+      <div>木</div>
+      <div>金</div>
+      <div>土</div>
+    </div>
+
+    <div id="calendarGrid" class="calendar-grid"></div>
+
+    <div id="eventList"></div>
+
+  </section>
+
+</div>
+ <!-- モーダル -->
+<div id="taskModal" class="modal">
+  <div class="modal-content">
+    <h2>タスクを追加</h2>
+    <input type="text" id="taskName" placeholder="タスク名">
+    
+    <label>期限日</label>
+    <input type="date" id="taskDate">
+<ul id="questList"></ul>
+    <div style="display:flex; justify-content:center; gap:8px; margin-top:6px;">
+      <input type="number" id="taskHour" min="0" max="23" placeholder="時" style="width:45%;">
+      <input type="number" id="taskMinute" min="0" max="59" placeholder="分" style="width:45%;">
+    </div>
+
+    <select id="taskPriority">
+      <option value="high">高</option>
+      <option value="medium" selected>中</option>
+      <option value="low">低</option>
+    </select>
+
+    <div class="btn-group">
+      <button id="saveTaskBtn">追加</button>
+      <button id="cancelTaskBtn">×</button>
+    </div>
+  </div>
+</div>
+
+
+  <script src="js/index.js" defer></script>
+</body>
+</html>
